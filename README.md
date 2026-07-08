@@ -44,51 +44,74 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
+Here is the console output from running the CLI demo script `main.py`:
 
 ```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+--- Unsorted Tasks ---
+  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Pending]
+  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
+  08:30 on 2026-07-08 - Morning feeding (10 min) [high] [Pending]
+  14:00 on 2026-07-08 - Brush fur (15 min) [low] [Pending]
+
+--- Sorted Daily Schedule ---
+  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
+  08:30 on 2026-07-08 - Morning feeding (10 min) [high] [Pending]
+  14:00 on 2026-07-08 - Brush fur (15 min) [low] [Pending]
+  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Pending]
+
+--- Conflict Warnings ---
+  [CONFLICT] Warning: 'Morning feeding' and 'Morning walk' are both scheduled at 08:30!
+
+--- Testing Task Recurrence ---
+Completing 'Evening feeding' for Mochi...
+
+--- Mochi's Updated Tasks ---
+  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Completed]
+  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
+  18:00 on 2026-07-09 - Evening feeding (15 min) [medium] [Pending]
 ```
 
 ## 🧪 Testing PawPal+
 
+We use `pytest` to assert the correctness of our scheduling constraints and behaviors. The tests cover task completion status changes, task addition tracking, chronological sorting correctness, conflict warnings, and daily task recurrence auto-spawning.
+
+Command to run tests:
 ```bash
-# Run the full test suite:
-pytest
-
-# Run with coverage:
-pytest --cov
+python -m pytest
 ```
 
-Sample test output:
+Successful test run output:
+```
+============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\bhasw\.gemini\antigravity\playground\ionized-helix
+configfile: pytest.ini
+plugins: anyio-4.14.0
+collected 5 items
 
+tests\test_pawpal.py .....                                               [100%]
+
+============================== 5 passed in 0.05s ==============================
 ```
-# Paste your pytest output here
-```
+
+**Confidence Level**: ⭐⭐⭐⭐⭐ (5/5 stars) - Highly reliable local scheduling layer, validated through automated unit assertions.
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | `Scheduler.sort_by_time()` | Sorts tasks chronologically using string due times in "HH:MM" format. |
+| Filtering | `Scheduler.filter_tasks()` | Filters tasks by "pending" or "completed" status. UI also allows filtering by specific pet name. |
+| Conflict handling | `Scheduler.check_conflicts()` | Identifies tasks scheduled at the same time and warns the user. |
+| Recurring tasks | `Task.mark_complete()` / `Scheduler.handle_recurrence()` | Daily tasks automatically roll over to the next day (`due_date` incremented by 1 day using `timedelta`). |
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
-
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
-
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+1. Run the app in your browser with `python -m streamlit run app.py`. Enter "Jordan" as the owner name in the sidebar.
+2. In the sidebar's **Register New Pet** form, register "Mochi" (dog) and "Biscuit" (cat). They will show up in the sidebar registered list.
+3. In the main panel's **Schedule Care Task** section, schedule a "Morning walk" for "Mochi" at "08:30" (duration 30 min, priority high).
+4. In the same section, schedule a "Morning feeding" for "Biscuit" at "08:30". A yellow alert warning will immediately appear at the top of the planner: `⚠️ Conflict Alert: Warning: 'Morning feeding' and 'Morning walk' are both scheduled at 08:30!`.
+5. Add a "Daily meds" task for "Mochi" at "09:00", setting the frequency to **Daily**.
+6. View **Today's Daily Planner** to see all tasks chronologically sorted by due time.
+7. Click the **Complete** button next to Mochi's "Daily meds" task. Its status changes to a checkmark (Completed), and a new pending "Daily meds" task is automatically scheduled for the next day.
+8. Use the **Filter Status** or **Filter Pet** dropdown selectors to filter tasks dynamically.

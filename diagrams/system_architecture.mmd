@@ -1,0 +1,9 @@
+graph TD
+    A[User Input / Pet Profile] --> B[Safety Guardrail Pre-Check]
+    B -->|Toxicity / Format Check| C[Pet Knowledge Base - RAG]
+    C -->|Retrieved Care Docs| D[PawPal Agentic Planner]
+    D -->|Few-Shot Routine Generation| E[Candidate Task Schedule]
+    E --> F[Reliability & Safety Evaluator]
+    F -->|Collision & Duration Validation| G[Confidence Scoring Engine]
+    G -->|High Confidence Schedule| H[PawPal+ UI & CLI Schedule]
+    G -->|Hazard Interception| I[Warning / Intervention Banner]

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- head
+
+        Purpose:
+        - Title used here shows up in the browser tab
+        - Link to the favicon (small image that appears in the browser tab)
+        - Link to the CSS file (used to style the webpage)
+
+        When To Modify:
+        - [ ] Project 2 (REQUIRED FEATURE) 
+        - [ ] Project 2 (STRETCH FEATURE) (favicon)
+        - [ ] Any time after
+        -->
+        <title>AI CodeFest & Hackathon 2026</title>
+        <link rel="icon" href="./img/placeholder.png">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    
+    <body>
+    
+        <!-- navbar
+
+        Purpose:
+        - Navigation bar that allows users to jump to different sections of the webpage
+        - Also holds buttons for user settings (dark mode, reduce motion)
+
+        When To Modify:
+        - [ ] Project 4 (REQUIRED FEATURE)
+        - [ ] Project 5 (REQUIRED FEATURE) 
+        - [ ] Project 8 (STRETCH FEATURE) 
+        - [ ] Any time between / after
+        -->
+        <div class="navbar">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="#links">Resources</a></li>
+                <li><a href="#rsvp">RSVP</a></li>
+                <li><button id="theme-button">Toggle Dark Mode</button></li>
+            </ul>
+        </div>
+
+        <!-- headings
+
+        Purpose:
+        - Main header section of the webpage
+        - Contains the title, subtitle, image, and key buttons for the webpage
+
+        When To Modify:
+        - [ ] Project 2 (REQUIRED FEATURE) 
+        - [ ] Project 3 (REQUIRED FEATURE) 
+        - [ ] Project 4 (REQUIRED FEATURE) 
+        - [ ] Any time after
+        -->
+        <div class="header-container revealable">
+            <div class="header-item">
+                <h1>AI CodeFest & Hackathon 2026</h1>
+                <h3>Build the future of intelligent apps in 48 hours.</h3>
+                <div class="header-buttons">
+                    <a href="#rsvp"><button type="button">Register Now</button></a>
+                    <a href="#schedule"><button type="button">View Schedule</button></a>
+                </div>
+            </div>
+            <div class="header-item">
+                <img id="header-img" src="./img/logo500.png" alt="A glowing purple and cyan futuristic neural network banner representing AI CodeFest" />
+            </div>
+        </div>
+
+        <!-- about
+
+        Purpose:
+        - Section for general info about the event
+        - Contains a video, description, and key points about the event
+
+        When To Modify:
+        - [ ] Project 2 (REQUIRED FEATURE) 
+        - [ ] Project 2 (STRETCH FEATURE) 
+        - [ ] Project 4 (STRETCH FEATURE) 
+        - [ ] Any time between / after
+        --> 
+        <div id="about" class="section-container revealable">
+            <h2>About the Event</h2>
+            <p>AI CodeFest & Hackathon 2026 is an immersive weekend hacking event designed for high school and college students who want to test their skills in building intelligent technologies. Participants will form teams to design, code, and deploy innovative artificial intelligence projects using cutting-edge models and development tools.</p>
+            <p>Throughout the weekend, attendees will have access to tech workshops hosted by industry experts, covering topics from neural networks to building user-friendly LLM applications. It is the perfect opportunity to learn, network with like-minded creators, and build projects that could win major prizes.</p>
+
+            <h3>What to Expect</h3>
+            <h4>Tag Line</h4>
+            <ul>
+                <li> <b>Workshops:</b> <i>Interactive sessions on AI APIs, Python, and front-end tools.</i></li>
+                <li> <b>Mentorship:</b> <i>1-on-1 guidance from software engineers and AI developers.</i></li>
+                <li> <b>Demos:</b> <i>Presenting finished projects to a panel of expert judges.</i></li>
+            </ul>
+
+            <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="AI Hackathon Teaser Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- schedule
+
+        Purpose:
+        - Section for specific info about the event's schedule
+        - Contains images and descriptions of each activity
+
+        When To Modify:
+        - [ ] Project 2 (REQUIRED FEATURE) 
+        - [ ] Project 4 (STRETCH FEATURE) 
+        - [ ] Any time between / after
+        --> 
+        <div id="schedule" class="section-container revealable">
+            <h2>Event Schedule</h2>
+
+            <div class="schedule-flex">
+                <div class="schedule-column">
+                    <h3>Day 1: Workshops</h3>
+                    <p>Kick off with opening ceremonies followed by rapid workshops on building web apps and integrating AI models.</p>
+                </div>
+                    
+                <div class="schedule-column">
+                    <h3>Day 2: Hacking</h3>
+                    <p>Build your solution with the help of mentors, join mid-day checkins, and grab snacks at the Cafe.</p>
+                </div>
+
+                <div class="schedule-column">
+                    <h3>Day 3: Demos</h3>
+                    <p>Finalize your submissions, present your slides and demos to judges, and attend the awards ceremony.</p>
+                </div>
+            </div>
+            <div class="schedule-graphic-container">
+                <img src="./img/placeholder.png" alt="Hackathon Timeline Schedule Diagram" />
+                <p class="caption">The timeline map outlining the milestones participants will complete over the 48-hour challenge.</p>
+            </div>
+        </div>
+
+        <!-- rsvp -->
+        <div id="rsvp" class="section-container rsvp-section revealable">
+            <div class="rsvp-container">
+                <div class="rsvp-left">
+                    <h2>Ready to Join?</h2>
+                    <p>Secure your spot at AI CodeFest & Hackathon 2026! Join us for a weekend of innovation, tech workshops, mentorship, and building intelligent projects with expert judges. Please fill out all fields below to register.</p>
+                    
+                    <form id="rsvp-form">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" required placeholder="Enter your name">
+                        
+                        <label for="state">Home State:</label>
+                        <input type="text" id="state" required placeholder="e.g. WA, CA, NY">
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required placeholder="you@example.com">
+                        
+                        <button type="button" id="rsvp-button">Submit RSVP</button>
+                    </form>
+                </div>
+                <div class="rsvp-right">
+                    <h3>Current Participants</h3>
+                    <ul id="participant-list">
+                        <li>Bhaswath Datla (WA)</li>
+                        <li>Jane Doe (CA)</li>
+                    </ul>
+                    <p class="rsvp-total">Total RSVPs: <span id="rsvp-count">2</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- success modal -->
+        <div id="success-modal" class="modal">
+            <div class="modal-container">
+                <div id="modal-item">
+                    <p id="modal-text">Thank you for RSVPing!</p>
+                </div>
+                <div id="modal-item">
+                    <img id="modal-img" src="./img/placeholder.png" alt="Celebration modal graphic">
+                </div>
+            </div>
+        </div>
+
+        <!-- links
+
+        Purpose:
+        - Links to other resources related to the event
+
+        When To Modify:
+        - [ ] Project 2 (STRETCH FEATURE) 
+        - [ ] Project 2 (STRETCH FEATURE) 
+        - [ ] Any time between / after
+        --> 
+        <div id="links" class="section-container revealable">
+            <h2>Links</h2>
+
+            <div class="links-grid">
+                <!-- This <a> block is one link.  Copy and paste all 6 lines to create another link. -->
+                <a class="block" href="https://github.com" target="_blank">
+                    <article>
+                        <h3>GitHub Developer Guides</h3>
+                        <p>Learn how to collaborate with your team, manage branches, and deploy code for your project.</p>
+                    </article>
+                </a>
+                
+                <a class="block" href="https://code.visualstudio.com" target="_blank">
+                    <article>
+                        <h3>VS Code Tips & Tricks</h3>
+                        <p>Optimize your development environment with the best extensions and shortcuts for fast coding.</p>
+                    </article>
+                </a>
+            </div>
+        </div>
+            
+        <!-- footer -->
+        <div class="footer">
+            <p>&copy; 2026 AI CodeFest & Tech Workshop. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://vscodeedu.com" target="_blank">VS Code for Edu</a>
+            </div>
+        </div>
+
+        <!-- script -->
+        <script src="index.js"></script>
+
+    </body>
+</html>

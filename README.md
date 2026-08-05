@@ -1,117 +1,158 @@
-# PawPal+ (Module 2 Project)
+# PawPal+ (Applied AI System - Project 4)
 
-You are building **PawPal+**, a Streamlit app that helps a pet owner plan care tasks for their pet.
+> **Base Project Identification**: This project is an evolution of **PawPal+ (Module 2 Project)**. The original Module 2 system was a Streamlit & CLI pet care scheduler that managed pet profiles, scheduled daily tasks (with priority, duration, and due time), sorted schedules chronologically, flagged exact-time collisions, and handled daily task recurrence.
 
-## Scenario
+---
 
-A busy pet owner needs help staying consistent with pet care. They want an assistant that can:
+## 🐾 Overview
 
-- Track pet care tasks (walks, feeding, meds, enrichment, grooming, etc.)
-- Consider constraints (time available, priority, owner preferences)
-- Produce a daily plan and explain why it chose that plan
+**PawPal+ Applied AI System** expands the Module 2 prototype into a production-grade AI system that assists pet owners in planning safe, personalized, and age-appropriate daily pet care routines. 
 
-Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
+The updated system introduces three major AI components:
+1. **RAG Knowledge Base (`PetKnowledgeBase`)**: Indexes pet safety guides, toxic food hazard databases (grapes, chocolate, onions, xylitol), age exercise rules, and medication spacing rules.
+2. **Safety Guardrail & Reliability Engine (`SafetyGuardrail`)**: Automatically intercepts toxic substance recommendations, caps exercise durations for senior/puppy pets, and detects schedule collisions, producing a numerical confidence score (0.0 to 1.0).
+3. **Agentic Routine Planner (`PawPalAgent`)**: Executes multi-step reasoning to synthesize personalized daily care routines with explicit reasoning traces.
 
-## What you will build
+---
 
-Your final app should:
+## 📐 System Architecture Diagram
 
-- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+The system architecture is committed as a Mermaid source file at [`diagrams/system_architecture.mmd`](file:///c:/Users/bhasw/.gemini/antigravity/playground/ionized-helix/diagrams/system_architecture.mmd):
 
-## Getting started
+```mermaid
+graph TD
+    A[User Input / Pet Profile] --> B[Safety Guardrail Pre-Check]
+    B -->|Toxicity / Format Check| C[Pet Knowledge Base - RAG]
+    C -->|Retrieved Care Docs| D[PawPal Agentic Planner]
+    D -->|Few-Shot Routine Generation| E[Candidate Task Schedule]
+    E --> F[Reliability & Safety Evaluator]
+    F -->|Collision & Duration Validation| G[Confidence Scoring Engine]
+    G -->|High Confidence Schedule| H[PawPal+ UI & CLI Schedule]
+    G -->|Hazard Interception| I[Warning / Intervention Banner]
+```
 
-### Setup
+---
 
+## 🚀 Getting Started & Setup Instructions
+
+### Prerequisites
+- Python 3.10+ installed
+- Virtual environment (recommended)
+
+### 1. Clone Repository & Install Dependencies
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+git clone https://github.com/Bhasu333/ai110-module2show-pawpal-starter.git applied-ai-system-final
+cd applied-ai-system-final
 pip install -r requirements.txt
 ```
 
-### Suggested workflow
-
-1. Read the scenario carefully and identify requirements and edge cases.
-2. Draft a UML diagram (classes, attributes, methods, relationships).
-3. Convert UML into Python class stubs (no logic yet).
-4. Implement scheduling logic in small increments.
-5. Add tests to verify key behaviors.
-6. Connect your logic to the Streamlit UI in `app.py`.
-7. Refine UML so it matches what you actually built.
-
-## 🖥️ Sample Output
-
-Here is the console output from running the CLI demo script `main.py`:
-
-```
---- Unsorted Tasks ---
-  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Pending]
-  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
-  08:30 on 2026-07-08 - Morning feeding (10 min) [high] [Pending]
-  14:00 on 2026-07-08 - Brush fur (15 min) [low] [Pending]
-
---- Sorted Daily Schedule ---
-  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
-  08:30 on 2026-07-08 - Morning feeding (10 min) [high] [Pending]
-  14:00 on 2026-07-08 - Brush fur (15 min) [low] [Pending]
-  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Pending]
-
---- Conflict Warnings ---
-  [CONFLICT] Warning: 'Morning feeding' and 'Morning walk' are both scheduled at 08:30!
-
---- Testing Task Recurrence ---
-Completing 'Evening feeding' for Mochi...
-
---- Mochi's Updated Tasks ---
-  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Completed]
-  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
-  18:00 on 2026-07-09 - Evening feeding (15 min) [medium] [Pending]
+### 2. Run CLI System Demonstration
+To execute the end-to-end system demo (RAG retrieval, safety guardrail checks, agent routine planner, and evaluation harness):
+```bash
+python main.py
 ```
 
-## 🧪 Testing PawPal+
+### 3. Run Automated Evaluation Test Harness
+To run the evaluation script across 6 predefined test scenarios:
+```bash
+python eval_system.py
+```
 
-We use `pytest` to assert the correctness of our scheduling constraints and behaviors. The tests cover task completion status changes, task addition tracking, chronological sorting correctness, conflict warnings, and daily task recurrence auto-spawning.
-
-Command to run tests:
+### 4. Run Pytest Suite
+To run all 10 automated unit tests:
 ```bash
 python -m pytest
 ```
 
-Successful test run output:
-```
-============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
-rootdir: C:\Users\bhasw\.gemini\antigravity\playground\ionized-helix
-configfile: pytest.ini
-plugins: anyio-4.14.0
-collected 5 items
-
-tests\test_pawpal.py .....                                               [100%]
-
-============================== 5 passed in 0.05s ==============================
+### 5. Launch Interactive Streamlit Dashboard
+```bash
+python -m streamlit run app.py
 ```
 
-**Confidence Level**: ⭐⭐⭐⭐⭐ (5/5 stars) - Highly reliable local scheduling layer, validated through automated unit assertions.
+---
 
-## 📐 Smarter Scheduling
+## 🖥️ Reproducible Execution Evidence
 
-| Feature | Method(s) | Notes |
-|---------|-----------|-------|
-| Task sorting | `Scheduler.sort_by_time()` | Sorts tasks chronologically using string due times in "HH:MM" format. |
-| Filtering | `Scheduler.filter_tasks()` | Filters tasks by "pending" or "completed" status. UI also allows filtering by specific pet name. |
-| Conflict handling | `Scheduler.check_conflicts()` | Identifies tasks scheduled at the same time and warns the user. |
-| Recurring tasks | `Task.mark_complete()` / `Scheduler.handle_recurrence()` | Daily tasks automatically roll over to the next day (`due_date` incremented by 1 day using `timedelta`). |
+Below is the verified terminal output from running `python main.py` end-to-end:
 
-## 📸 Demo Walkthrough
+```text
+==================================================================
+           PAWPAL+ APPLIED AI SYSTEM DEMO (MODULE 4)               
+==================================================================
 
-1. Run the app in your browser with `python -m streamlit run app.py`. Enter "Jordan" as the owner name in the sidebar.
-2. In the sidebar's **Register New Pet** form, register "Mochi" (dog) and "Biscuit" (cat). They will show up in the sidebar registered list.
-3. In the main panel's **Schedule Care Task** section, schedule a "Morning walk" for "Mochi" at "08:30" (duration 30 min, priority high).
-4. In the same section, schedule a "Morning feeding" for "Biscuit" at "08:30". A yellow alert warning will immediately appear at the top of the planner: `⚠️ Conflict Alert: Warning: 'Morning feeding' and 'Morning walk' are both scheduled at 08:30!`.
-5. Add a "Daily meds" task for "Mochi" at "09:00", setting the frequency to **Daily**.
-6. View **Today's Daily Planner** to see all tasks chronologically sorted by due time.
-7. Click the **Complete** button next to Mochi's "Daily meds" task. Its status changes to a checkmark (Completed), and a new pending "Daily meds" task is automatically scheduled for the next day.
-8. Use the **Filter Status** or **Filter Pet** dropdown selectors to filter tasks dynamically.
+--- Base Chronological Schedule ---
+  08:30 on 2026-07-08 - Morning walk (30 min) [high] [Pending]
+  08:30 on 2026-07-08 - Morning feeding (10 min) [high] [Pending]
+  14:00 on 2026-07-08 - Brush fur (15 min) [low] [Pending]
+  18:00 on 2026-07-08 - Evening feeding (15 min) [medium] [Pending]
+
+--- 1. RAG Knowledge Base Retrieval ---
+Querying knowledge index for: 'grapes toxicity senior dog exercise'
+  [FOUND DOC] [Exercise Guidelines] Senior Pet & Puppy Exercise Limits: Senior dogs (aged 8+ years) and young puppies (<6 months) require low-impact exercise...
+  [FOUND DOC] [Safety & Toxicity] Toxic Foods for Dogs & Cats: DANGEROUS TOXIC FOODS: Chocolate, grapes, raisins, onions, garlic, xylitol, macadamia...
+
+--- 2. Safety Guardrail & Reliability Evaluation ---
+Task: 'Feed grapes snack' -> Safe: False | Confidence: 0.5
+  [GUARDRAIL INTERVENTION] HAZARD DETECTED: Task 'Feed grapes snack' mentions 'grape' which is toxic to pets!
+Schedule Safety Check -> Safe: True | Confidence Score: 0.85
+  [WARNING] SCHEDULE COLLISION: Warning: 'Morning feeding' and 'Morning walk' are both scheduled at 08:30!
+
+--- 3. Agentic AI Routine Planner Workflow ---
+Agent generated routine for Buster:
+  Step 1 [Input Analysis]: Planning routine for Buster (dog, 10 years old, high energy). Notes: 'daily medication'.
+  Step 2 [RAG Retrieval]: Retrieved knowledge docs -> ['Hydration & Mental Enrichment', 'Senior Pet & Puppy Exercise Limits']
+  Step 3 [Task Synthesis]: Generated 6 candidate tasks.
+  Step 4 [Guardrail Check]: Safety pass=True, Confidence Score=1.0. Issues=0, Warnings=0
+
+--- AI Agent Recommended Routine Tasks ---
+  08:00 on 2026-08-05 - Morning walk (20 min) [high] [Pending]
+  08:45 on 2026-08-05 - Breakfast feeding (15 min) [high] [Pending]
+  13:00 on 2026-08-05 - Puzzle toy enrichment (25 min) [medium] [Pending]
+  09:15 on 2026-08-05 - Daily medication (5 min) [high] [Pending]
+  18:00 on 2026-08-05 - Evening walk (20 min) [medium] [Pending]
+  18:45 on 2026-08-05 - Dinner feeding (15 min) [high] [Pending]
+
+--- 4. Running System Evaluation Harness ---
+==================================================================
+            PAWPAL+ SYSTEM EVALUATION HARNESS                     
+==================================================================
+
+Running 6 evaluation test cases...
+
+ID     | Test Name                              | Status | Confidence | Details
+------------------------------------------------------------------------------------------
+TC-1   | Toxic Food Hazard (Grapes treat)       | PASS   | 0.50       | Issues: 1, Warns: 0
+TC-2   | Senior Dog Exercise Limit (60m run)    | PASS   | 0.80       | Issues: 0, Warns: 1
+TC-3   | RAG Document Retrieval (Toxic search)  | PASS   | 1.00       | Retrieved top match: Toxic Foods for Dogs & Cats
+TC-4   | Schedule Time Collision Detection      | PASS   | 0.85       | Correctly detected schedule collision
+TC-5   | Agentic Routine Planning (Senior Dog)  | PASS   | 1.00       | Generated 4 tasks cleanly. Safety pass=True
+TC-6   | Valid Standard Task (Daily brush)      | PASS   | 1.00       | Issues: 0, Warns: 0
+------------------------------------------------------------------------------------------
+
+EVALUATION SUMMARY: 6 out of 6 tests passed.
+Average System Confidence Score: 0.86 / 1.00
+
+==================================================================
+```
+
+---
+
+## 🧪 Testing & Reliability Summary
+
+- **Pytest Suite**: 10 passed out of 10 tests (`python -m pytest`).
+- **Evaluation Harness**: 6 passed out of 6 evaluation scenarios (`eval_system.py`).
+- **Average Confidence Score**: **0.86 / 1.00**.
+- **Guardrail Effectiveness**: Successfully intercepted toxic grape/chocolate inputs and automatically adjusted exercise durations for senior pets.
+
+---
+
+## 💡 Design Decisions & Tradeoffs
+
+1. **Deterministic Safety Guardrails over Pure LLM Output**: Toxic food detection and age limits are handled deterministically via rule engines and RAG rather than trusting an unconstrained LLM prompt. This ensures 100% reliability for critical health checks.
+2. **In-Memory Document Indexing for RAG**: Used keyword relevance scoring in `PetKnowledgeBase` to minimize external library overhead while ensuring sub-millisecond retrieval speeds for local development.
+
+---
+
+## 📄 Model Card & Reflections
+
+All required AI collaboration reflections, ethical considerations, toxic substance guardrail rules, limitations, and prompt comparison tables are documented in [`model_card.md`](file:///c:/Users/bhasw/.gemini/antigravity/playground/ionized-helix/model_card.md).
